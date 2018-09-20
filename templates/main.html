@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name='name' content = 'Gift'>
+<title> {{obj.title}} </title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+
+</head>
+
+<body>
+
+
+<div class="sidebar">
+<a href="/user"><i class="fa fa-fw fa-user"></i> User</a>
+  <a href="/home"><i class="fa fa-fw fa-home"></i> Home</a>
+  <a href="/visual1"><i class="fa fa-fw fa-chart"></i> Visual 1</a>
+  <a href="/visual2"><i class="fa fa-fw fa-chart"></i> Visual 2</a>
+  <a href="/visual3"><i class="fa fa-fw fa-chart"></i> Visual 3</a>
+</div>
+
+<div class="main">
+
+	{% if obj.attribute == 'home' %}
+		<h2>Dashboard</h2>
+		<p>{{obj.paragraph}}</p>
+	{%endif%}
+	
+	{% if obj.attribute == 'user' %}
+		<h2>Hello {{ obj.name }}</h2>
+	{%endif%}
+	
+	{% if obj.attribute == 'visual' %}
+		<h2>Visual {{obj.id}}</h2>
+	{%endif%}
+
+</div>
+ 
+
+</body>
+
+
+</html>
