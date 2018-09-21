@@ -11,6 +11,7 @@
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<script type="text/javascript" src="{{url_for('static',filename='js/pieChart.js')}}"></script>
 	<script type="text/javascript" src="{{url_for('static',filename='js/lineChart.js')}}"></script>
+	<script type="text/javascript" src="{{url_for('static',filename='js/mapChart.js')}}"></script>
 </head>
 
 <body>
@@ -43,6 +44,11 @@
 		{% if obj.id == 2 %}
 			<div id="curve_line" style="width: 900px; height: 500px"></div>
 		{%endif%}
+		
+		{% if obj.id == 3 %}
+			<div id="map_view" style="width: 700px; height: 433px;"></div>
+		{%endif%}
+		
 	{%endif%}
 
 </div>
