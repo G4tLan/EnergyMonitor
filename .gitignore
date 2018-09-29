@@ -1,1 +1,4 @@
 *.pyc
+
+/env
+/.vs/webaPP/v15

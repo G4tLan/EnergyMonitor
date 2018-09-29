@@ -1,4 +1,5 @@
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, jsonify
+from pymongo import MongoClient
 from routes.userRoutes import User
 from routes.visualRoutes import Visual
 from routes.homeRoutes import Home
@@ -19,4 +20,4 @@ def user():
 	return User.user();
 	
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug = True)
