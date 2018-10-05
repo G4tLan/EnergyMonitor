@@ -19,6 +19,8 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="data\dataModel.py" />
+    <Compile Include="data\DBmanager.py" />
     <Compile Include="main.py" />
     <Compile Include="routes\homeRoutes.py" />
     <Compile Include="routes\userRoutes.py" />
@@ -35,6 +37,7 @@
     <Content Include="templates\main.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="data\" />
     <Folder Include="routes" />
     <Folder Include="static" />
     <Folder Include="static\js" />

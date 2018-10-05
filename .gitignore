@@ -2,3 +2,5 @@
 
 /env
 /.vs/webaPP/v15
+/.vs
+/database/mongoDB
