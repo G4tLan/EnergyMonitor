@@ -22,6 +22,6 @@ def user():
 	
 if __name__ == "__main__":
     db = MongoDBmanager('codeTest')
-    db.addDataToDoc(20180912,'Mansion','log', {'timeStamp': "2019/04/03 08:19:00 PM", 'kvarh':10,'kwh':1});
+    db.addDataToDoc('Mansion1','log2', {'timeStamp': "2020/04/03 08:19:00 PM", 'kvarh':10,'kwh':1});
     print(f"no objects  { TimeSeriesDataModel.objects().count()}")
     app.run(debug = True)
