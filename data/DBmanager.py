@@ -1,5 +1,6 @@
 import mongoengine
 import time
+import dateutil
 import pandas as pd
 import json
 import os
@@ -29,30 +30,75 @@ class MongoDBmanager:
             doc.save()
             print("added doc")
 
-    def addDataToDoc(self, buildingName: str, dataLogger: str, data: SON):
+    def addDataToDoc(self, id: int, buildingName: str, dataLogger: str, data: SON):
         collection = TimeSeriesDataModel.switch_collection(TimeSeriesDataModel(),buildingName)
         object = QuerySet(TimeSeriesDataModel,collection._get_collection())
-        
-        if (object.filter(Q(_id = self.dateToID(data['timeStamp'])) & Q(buildingName = buildingName) &
+        if (object.filter(Q(_id = id) & Q(buildingName = buildingName) &
                                       Q(dataLogger=dataLogger)).count() == 1): #only one document must exist
             print("document data exists")
             d1 = Data(timeStamp =data['timeStamp'], kvarh = data['kvarh'], kwh = data['kwh'])
-            object(_id = self.dateToID(data['timeStamp']),buildingName = buildingName,
+            object(_id = id,buildingName = buildingName,
                                       dataLogger=dataLogger)\
                                 .update(push__data=d1)
         else:
-            self.addDocument(self.dateToID(data['timeStamp']),buildingName,dataLogger)
-            self.addDataToDoc(buildingName,dataLogger,data)
+            self.addDocument(id,buildingName,dataLogger)
+            self.addDataToDoc(id,buildingName,dataLogger,data)
 
-    def dateToID(self,date: str) -> int:
+
+    def updateDataInDoc(self, id: int, buildingName: str, dataLogger: str, data = {'kwh': False, 'kvarh':False, 'value': -1, 'timestamp': 0}):
+        collection = TimeSeriesDataModel.switch_collection(TimeSeriesDataModel(),buildingName)
+        object = QuerySet(TimeSeriesDataModel,collection._get_collection())
+        iso = time.strptime(data['timestamp'], "%Y-%m-%d %H:%M")
+        print(iso)
+        print(object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year, iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))))
+        
+        #if (object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).count() > 0):
+        for res in object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).update(set__data__S__kwh = data['value'])
+            print('jj')
+
+
+
+    def dateToID(self,date: str, fm = '/') -> int:
         ID = None
-        dt = time.strptime(date, "%Y/%m/%d %I:%M:%S %p")
+        dt = None
+        if fm == '/':
+            dt = time.strptime(date, "%Y/%m/%d %I:%M:%S %p")
+        elif fm == '-':
+            dt = time.strptime(date, "%Y-%m-%d %H:%M")
         ID = dt.tm_year*10000 + dt.tm_mon*100+dt.tm_mday
         print(ID)
         return ID
 
-    def importCSVtoMongoDB(self,filepath: str):
+    def importCSVtoMongoDB(self,filepath: str, buildingName: str, dataLogger: str, options = {'timestamp':None,'value1': None, 'value2': None, 'kvarh':False, 'kwh':False, 'update':False}, recurssion= False):
+       
         cdir = os.path.dirname(__file__)
         file_res = os.path.join(cdir, filepath)
         data = pd.read_csv(file_res)
+        
+        data  = data.drop(data[data[options['value']] == -1].index)
+        print(data)
         data_json = json.loads(data.to_json(orient='records'))
+        tempTime = None
+        dataObjs = []
+        for point in data_json:
+            id = self.dateToID(point[options['timestamp']] , '-')
+            if options['update']:
+                print('fa')
+            else:
+                if options['kwh'] and options['kvarh']:
+                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                                'kvarh': point[options['value1']],
+                                'kwh': point[options['value2']]
+                                })
+                elif options['kwh'] and options['kvarh']:
+                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                                'kvarh': point[options['value1']],
+                                'kwh': options['value2']
+                                })
+                elif options['kwh'] and options['kvarh']:
+                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                                'kvarh': options['value1'],
+                                'kwh': point[options['value2']]
+                                })
+            #self.addDataToDoc(id, buildingName, dataLogger, dataObjs)
+            

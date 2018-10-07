@@ -22,6 +22,8 @@ def user():
 	
 if __name__ == "__main__":
     db = MongoDBmanager('codeTest')
-    db.addDataToDoc('Mansion1','log2', {'timeStamp': "2020/04/03 08:19:00 PM", 'kvarh':10,'kwh':1});
+    filename = "C:/Users/7240/Desktop/Design - software engineering/webaPP/StitchedData/WITS_3_Jubilee_Road_kVarh/WITS_3_Jubilee_Road_kVarh.csv"
+    #db.importCSVtoMongoDB(filename,'Jubilee','sc3', {'timestamp':'ValueTimestamp','value':'WITS_3_Jubilee_Road_kVarh'})
+    db.updateDataInDoc(20141212, 'Jubilee', 'sc3',  {'kwh': False, 'kvarh':False, 'value': 100, 'timestamp': '2014-12-12 00:30'})
     print(f"no objects  { TimeSeriesDataModel.objects().count()}")
     app.run(debug = True)
