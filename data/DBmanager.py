@@ -49,12 +49,13 @@ class MongoDBmanager:
         collection = TimeSeriesDataModel.switch_collection(TimeSeriesDataModel(),buildingName)
         object = QuerySet(TimeSeriesDataModel,collection._get_collection())
         iso = time.strptime(data['timestamp'], "%Y-%m-%d %H:%M")
-        print(iso)
-        print(object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year, iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))))
-        
-        #if (object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).count() > 0):
-        for res in object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).update(set__data__S__kwh = data['value'])
-            print('jj')
+     
+        if (object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).count() > 0):
+            if data['kwh'] and not data['kvarh']:
+                object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).update(set__data__S__kwh = data['value'])
+            if not data['kwh'] and data['kvarh']:
+                object.filter(Q(_id = id) & Q(buildingName = buildingName) & Q(dataLogger=dataLogger) & Q(data__timeStamp = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec))).update(set__data__S__kvarh = data['value'])
+    
 
 
 
@@ -75,30 +76,53 @@ class MongoDBmanager:
         file_res = os.path.join(cdir, filepath)
         data = pd.read_csv(file_res)
         
-        data  = data.drop(data[data[options['value']] == -1].index)
-        print(data)
+        data  = data.drop(data[data[options['value1']] == -1].index)
+      
         data_json = json.loads(data.to_json(orient='records'))
         tempTime = None
         dataObjs = []
         for point in data_json:
             id = self.dateToID(point[options['timestamp']] , '-')
             if options['update']:
-                print('fa')
+                print(point[options['value1']])
+                self.updateDataInDoc(id, buildingName, dataLogger, {'kwh': options['kwh'], 'kvarh': options['kvarh'], 'value': point[options['value1']], 'timestamp': point[options['timestamp']]})
             else:
                 if options['kwh'] and options['kvarh']:
-                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                    dataObjs=( {'timeStamp':point[options['timestamp']],
                                 'kvarh': point[options['value1']],
                                 'kwh': point[options['value2']]
                                 })
                 elif options['kwh'] and options['kvarh']:
-                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                    dataObjs=( {'timeStamp':point[options['timestamp']],
                                 'kvarh': point[options['value1']],
                                 'kwh': options['value2']
                                 })
                 elif options['kwh'] and options['kvarh']:
-                    dataObjs.append( {'timeStamp':point[options['timestamp']],
+                    dataObjs=( {'timeStamp':point[options['timestamp']],
                                 'kvarh': options['value1'],
                                 'kwh': point[options['value2']]
                                 })
-            #self.addDataToDoc(id, buildingName, dataLogger, dataObjs)
-            
+                self.addDataToDoc(id, buildingName, dataLogger, dataObjs)
+                
+    def fetchData(self, buildingName: str, datalogger: str, startDateTime: str, endDateTime: str):
+        collection = TimeSeriesDataModel.switch_collection(TimeSeriesDataModel(),buildingName)
+        object = QuerySet(TimeSeriesDataModel,collection._get_collection())  
+        
+        
+        iso = time.strptime(startDateTime, "%Y-%m-%d %H:%M")
+        startDateTime = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec)
+        iso = time.strptime(endDateTime, "%Y-%m-%d %H:%M")
+        endDateTime = datetime.datetime(iso.tm_year,iso.tm_mon, iso.tm_mday, iso.tm_hour, iso.tm_min,iso.tm_sec)
+        
+        results = object.aggregate(*[{'$match': { 'data.timeStamp' :
+                                    {'$gte':startDateTime,
+                                    '$lte':endDateTime}}}])
+        if startDateTime > endDateTime:
+            print("time comparison")
+        res = []
+        for doc in results:
+            for data in doc['data']:
+                if  data['timeStamp'] >= startDateTime and data['timeStamp'] <= endDateTime:
+                    res.append(data)
+
+        return res
