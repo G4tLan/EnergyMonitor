@@ -22,6 +22,9 @@
     <Compile Include="data\dataModel.py" />
     <Compile Include="data\DBmanager.py" />
     <Compile Include="main.py" />
+    <Compile Include="routes\dbRoutes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\homeRoutes.py" />
     <Compile Include="routes\userRoutes.py" />
     <Compile Include="routes\visualRoutes.py" />

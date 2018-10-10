@@ -1,10 +1,10 @@
 from flask import render_template
 
 class Visual():
-	def default(id):
+	def default():
 		obj = {
-			'attribute' : 'visual',
-			'title': 'Default view',
-			'id': id
+			'attribute' : 'Dashboard',
+			'title': 'Dashboard View',
+            'name': 'Dashboard'
 		};
-		return render_template("main.html", obj = obj);
+		return render_template("homepage.html", obj = obj);

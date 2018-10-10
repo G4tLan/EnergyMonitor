@@ -9,45 +9,11 @@
 
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-	<script type="text/javascript" src="{{url_for('static',filename='js/pieChart.js')}}"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript" src="{{url_for('static',filename='js/pieChart.js')}}"></script>
 	<script type="text/javascript" src="{{url_for('static',filename='js/lineChart.js')}}"></script>
-	<script type="text/javascript">
-      google.charts.load('current', {'packages':['treemap', 'map']});
-      google.charts.setOnLoadCallback(drawChart);
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Location', 'Parent', 'Market trade volume (size)', 'Market increase/decrease (color)'],
-          ['America',   null,             0,                               0],
-          ['Brazil',    'America',            11,                              10],
-          ['USA',       'America',            52,                              31],
-          ['Mexico',    'America',            24,                              12],
-          ['Canada',    'America',            16,                              -23],
+	<script type="text/javascript" src="{{url_for('static',filename='js/tree_map.js')}}"></script>
 
-        ]);
-		
-		var geoView = new google.visualization.DataView(data);
-        geoView.setColumns([0]);
-		
-		var map =  new google.visualization.Map(document.getElementById('map_div'));
-        map.draw(geoView, {showTip: true});
-
-        tree = new google.visualization.TreeMap(document.getElementById('tree_div'));
-
-        tree.draw(data, {
-          minColor: '#f00',
-          midColor: '#ddd',
-          maxColor: '#0d0',
-          headerHeight: 15,
-          fontColor: 'black',
-          showScale: true
-        });
-		google.visualization.events.addListener(tree, 'select', function() {
-            map.setSelection(tree.getSelection());
-			  
-          });
-
-      }
-    </script>
 </head>
 
 <body>
@@ -63,39 +29,47 @@
 
 <div class="main">
 
-	{% if obj.attribute == 'home' %}
-		<h2>Dashboard</h2>
-		<p>{{obj.paragraph}}</p>
-	{%endif%}
-	
-	{% if obj.attribute == 'user' %}
-		<h2>Hello {{ obj.name }}</h2>
-	{%endif%}
-	
-	{% if obj.attribute == 'visual' %}
-		<h2>Visual {{obj.id}}</h2>
-		{% if obj.id == 1 %}
-			<div id="pie_chart" style="width: 900px; height: 500px"></div>
-		{%endif%}
-		{% if obj.id == 2 %}
-			<div id="curve_line" style="width: 900px; height: 500px"></div>
-		{%endif%}
-		
-		{% if obj.id == 3 %}
-			<table align="center">
-			  <tr valign="top">
-				<td style="width: 50%;">
-				  <div id="tree_div" style="width: 400px; height: 300;"></div>
-				  <p> Right click to go back one node up and right click to see children</p>
-				</td>
-				<td style="width: 50%;">
-				  <div id="map_div"></div>
-				</td>
-			  </tr>
-			</table>
-		{%endif%}
-		
-	{%endif%}
+    {% if obj.attribute == 'home' %}
+    <h2>Dashboard</h2>
+    <p>{{obj.paragraph}}</p>
+    {%endif%}
+
+    {% if obj.attribute == 'user' %}
+    <h2>Hello {{ obj.name }}</h2>
+    {%endif%}
+
+    {% if obj.attribute == 'visual' %}
+    <h2>Visual {{obj.id}}</h2>
+    {% if obj.id == 1 %}
+    <div id="pie_chart" style="width: 900px; height: 500px"></div>
+    {%endif%}
+    {% if obj.id == 2 %}
+    <div id="curve_line" style="width: 900px; height: 500px"></div>
+    {%endif%}
+
+    {% if obj.id == 3 %}
+    <table align="center">
+        <tr valign="top">
+            <td style="width: 50%;">
+                <div id="tree_div" style="width: 400px; height: 300;"></div>
+                <p> Right click to go back one node up and right click to see children</p>
+            </td>
+            <td style="width: 50%;">
+                <div id="map_div"></div>
+            </td>
+        </tr>
+    </table>
+    {%endif%}
+
+    {% if obj.id == 4 %}
+    <div id="curve_line" style="width: 900px; height: 500px"></div>
+    <script>
+        google.charts.load('current', { 'packages': ['line'] });
+        google.charts.setOnLoadCallback(drawLine);
+    </script>
+    {%endif%}
+
+    {%endif%}
 
 </div>
  

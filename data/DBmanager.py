@@ -117,8 +117,6 @@ class MongoDBmanager:
         results = object.aggregate(*[{'$match': { 'data.timeStamp' :
                                     {'$gte':startDateTime,
                                     '$lte':endDateTime}}}])
-        if startDateTime > endDateTime:
-            print("time comparison")
         res = []
         for doc in results:
             for data in doc['data']:

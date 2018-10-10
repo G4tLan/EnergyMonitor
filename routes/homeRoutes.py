@@ -5,6 +5,6 @@ class Home():
 		obj = {
 		'attribute' : 'home',
 		'title' : 'Homepage',
-		'paragraph' : 'This is your dashboard check energy usage, costs and estimate breakeven'
+		'paragraph' : 'This is the homepage check best and worst energy users'
 		};
-		return render_template("main.html", obj = obj);
+		return render_template("homepage.html", obj = obj);

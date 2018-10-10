@@ -34,3 +34,25 @@ body {font-family: "Lato", sans-serif;}
   .sidebar {padding-top: 15px;}
   .sidebar a {font-size: 18px;}
 }
+
+
+.topnav {
+    overflow: hidden;
+    width: 100%;
+    background-color: #111;
+    text-align: center;
+}
+
+.topnav h {
+    display: inline-block;
+    text-decoration-color: #FFF ;
+    text-align: center;
+    padding: 0px 0px;
+    font-size: 40px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.bg-topnav {
+    background-color: #111;
+}

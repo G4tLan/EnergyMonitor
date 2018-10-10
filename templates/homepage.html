@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='name' content='Gift'>
+    <title> {{obj.title}} </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-sm navbar-dark bg-topnav ">
+        <h1 class="topnav">ENEDash </h1>
+    </nav>
+    <div class="sidebar">
+        <a href="/home"><i class="fa fa-fw fa-home"></i> Home</a>
+        <a href="/visual"><i class="fa fa-fw fa-chart"></i>Dashboard</a>
+
+    </div>
+
+    <div class="main">
+
+        {% if obj.attribute == 'home' %}
+        <h2>Your energy saving tips</h2>
+        <p>{{obj.paragraph}}</p>
+        {%endif%}
+
+        {% if obj.attribute == 'Dashboard' %}
+        <h2>The {{ obj.name }}</h2>
+        {%endif%}
+
+    </div>
+
+
+</body>
+
+
+</html>
