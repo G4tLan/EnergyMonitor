@@ -1,5 +1,14 @@
 
-body {font-family: "Lato", sans-serif;}
+body {
+    font-family: "Lato", sans-serif;
+    background-color: #ddd;
+}
+
+.carousel-item.active,
+.carousel-item-next,
+.carousel-item-prev {
+    display: block;
+}
 
 .sidebar {
   height: 100%;
@@ -19,6 +28,7 @@ body {font-family: "Lato", sans-serif;}
   font-size: 20px;
   color: #818181;
   display: block;
+  
 }
 
 .sidebar a:hover {
@@ -43,16 +53,41 @@ body {font-family: "Lato", sans-serif;}
     text-align: center;
 }
 
-.topnav h {
+.topnav h1 {
     display: inline-block;
-    text-decoration-color: #FFF ;
     text-align: center;
     padding: 0px 0px;
     font-size: 40px;
     font-weight: bold;
     font-style: italic;
+    background-color: #111fff;
 }
 
 .bg-topnav {
+    background-color: #111fff;
+}
+
+.bg-topnav p{
     background-color: #111;
+}
+
+img {
+    max-width: 50%;
+    height: 100%;
+}
+
+/* Breadcrumb */
+.breadcrumb{
+  background:#cccccc;
+  color:#333333;
+}
+
+.breadcrumb a{
+  color:#333333;
+}
+
+.main-color-bg {
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+    color: #ffffff !important;
 }
