@@ -95,19 +95,19 @@ class MongoDBmanager:
                                 'kvarh': point[options['value1']],
                                 'kwh': point[options['value2']]
                                 })
-                elif options['kwh'] and options['kvarh']:
+                elif not options['kwh'] and options['kvarh']:
                     dataObjs=( {'timeStamp':point[options['timestamp']],
                                 'kvarh': point[options['value1']],
                                 'kwh': options['value2']
                                 })
-                elif options['kwh'] and options['kvarh']:
+                elif options['kwh'] and not options['kvarh']:
                     dataObjs=( {'timeStamp':point[options['timestamp']],
                                 'kvarh': options['value1'],
                                 'kwh': point[options['value2']]
                                 })
                 self.addDataToDoc(id, buildingName, dataLogger, dataObjs)
                 
-    def fetchData(self, buildingName: str, datalogger: str, startDateTime: str, endDateTime: str):
+    def fetchData(self, buildingName: str, startDateTime: str, endDateTime: str):
         collection = TimeSeriesDataModel.switch_collection(TimeSeriesDataModel(),buildingName)
         object = QuerySet(TimeSeriesDataModel,collection._get_collection())  
         
@@ -136,6 +136,48 @@ class MongoDBmanager:
                 res.append(c)
  
         return res
+
+    def getWorstBestBuildings(self):
+        buildings = self.fetchBuildings()
+
+        res = []
+        for b in buildings:
+            #data = self.fetchData(b,datetime.datetime.today().strftime('%Y-%m-%d') +' 00:00', datetime.datetime.today().strftime('%Y-%m-%d %H:%M'))
+            data = self.fetchData(b,'2018-07-03 00:00', '2018-07-04 00:00')
+            dataString = json.dumps(data, default=str)
+            a = pd.read_json(dataString)
+            if len(a.index) == 0:
+                continue
+            newA = a.drop(a[a['kwh'] == -1].index)
+            avg = newA['kwh'].mean()
+            res.append({'building':b,'average':round(avg,2)})
+
+        if len(res) == 0:
+            return {'Worst': [], 'Best': []}
+
+        
+        y = json.dumps(res)
+        a = pd.read_json(y)
+        
+        orderedData = a.sort_values('average')
+
+        jsonObj = {'Worst': [], 'Best': []}
+        if len(orderedData.index) <= 6:
+            for index in range(0,len(orderedData.index)):
+                if(index < 3):
+                    jsonObj['Worst'].append(orderedData.iloc[index].to_dict())
+
+                else:
+                    jsonObj['Best'].append(orderedData.iloc[index].to_dict())
+        else:
+            for index in range(0,3):
+                jsonObj['Best'].append(orderedData.iloc[index].to_dict())
+
+            for index in range(len(orderedData.index) - 1,len(orderedData.index) - 4,-1):
+                jsonObj['Worst'].append(orderedData.iloc[index].to_dict())
+
+        return jsonObj
+
 
     def fetchUserWidgets(emailAddress: str):
         #return all user widgets

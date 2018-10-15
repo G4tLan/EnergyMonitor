@@ -4,8 +4,8 @@ from flask import render_template, jsonify
 db = MongoDBmanager('codeTest')
 
 class MongoRoutes:
-    def fetchData(buildingName: str, datalogger: str, startDateTime: str, endDateTime: str):
-        res = db.fetchData(buildingName, datalogger, startDateTime, endDateTime)
+    def fetchData(buildingName: str,  startDateTime: str, endDateTime: str):
+        res = db.fetchData(buildingName, startDateTime, endDateTime)
         return jsonify(res);
         # return render_template("main.html", obj = obj);
 

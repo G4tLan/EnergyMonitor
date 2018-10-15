@@ -19,6 +19,7 @@
     <VisualStudioVersion Condition=" '$(VisualStudioVersion)' == '' ">10.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="constants.py" />
     <Compile Include="data\dataModel.py" />
     <Compile Include="data\DBmanager.py" />
     <Compile Include="data\WidgetsModel.py">
@@ -40,19 +41,26 @@
     <Content Include="requirements.txt" />
     <Content Include="static\js\lineChart.js" />
     <Content Include="static\js\mapChart.js" />
+    <Content Include="static\js\misc.js" />
     <Content Include="static\js\pieChart.js" />
     <Content Include="static\js\tree_map.js" />
+    <Content Include="static\pics\bulb.jpeg" />
+    <Content Include="static\pics\led_bulb.jpeg" />
+    <Content Include="static\pics\tap_water.jpg" />
     <Content Include="static\style.css" />
+    <Content Include="templates\analytics.html" />
     <Content Include="templates\login.html" />
     <Content Include="templates\homepage.html" />
     <Content Include="templates\js\jquery-3.3.1.min.js" />
     <Content Include="templates\dashboard.html" />
+    <Content Include="templates\widget.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="routes" />
     <Folder Include="static" />
     <Folder Include="static\js" />
+    <Folder Include="static\pics\" />
     <Folder Include="templates" />
     <Folder Include="templates\js" />
   </ItemGroup>

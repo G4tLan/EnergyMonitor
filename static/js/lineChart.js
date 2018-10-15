@@ -1,18 +1,17 @@
+var B = null
 
-
-function drawLine() {
-
-
+function drawLine(building) {
+    B = building
     var resData = $.ajax({
-        url: "fetch",
+        url: "fetch/"+building+"/2018-03-01 14:30/2018-03-01 20:00",
         dataType: "json",
         async: false
     }).responseText;
    
     var data = new google.visualization.DataTable();
-    data.addColumn('date', 'Time');
-    data.addColumn('number', 'kwh');
-    data.addColumn('number', 'kvarh');
+    data.addColumn('date', 'Time (hours)');
+    data.addColumn('number', 'kVArh');
+    data.addColumn('number', 'kWh');
 
     resData = JSON.parse(resData)
     for (var obj = 0; obj < resData.length; obj++) {
@@ -23,8 +22,8 @@ function drawLine() {
     
     var options = {
     chart: {
-        title: 'Box Office Earnings in First Two Weeks of Opening',
-        subtitle: 'in millions of dollars (USD)'
+        title: 'Electricity Consumption of ' + building + ' in the last 24 hours',
+        subtitle: 'Total number of occupants: N/A' + '\t Cost: R--,--'
     }
     };
 
@@ -34,5 +33,5 @@ function drawLine() {
 }
 
 $(window).resize(function () {
-    drawLine();
+    drawLine(B);
 });

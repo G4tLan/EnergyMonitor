@@ -1,6 +1,5 @@
-google.charts.load('current', { 'packages': ['treemap', 'map'] });
-google.charts.setOnLoadCallback(drawChart);
-function drawChart() {
+
+function drawTreeMap() {
     var data = google.visualization.arrayToDataTable([
         ['Location', 'Parent', 'Market trade volume (size)', 'Market increase/decrease (color)'],
         ['America', null, 0, 0],
