@@ -1,0 +1,93 @@
+﻿<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='name' content='Gift'>
+    <meta charset="utf-8">
+    <title> {{obj.title}} </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+    <script type="text/javascript" src="{{url_for('static',filename='js/misc.js')}}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/home" class="navbar-brand">ENEDash</a>
+            </div>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navBarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navBarMenu">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="#dashboard" class="nav-link"> Update Widget</a></li>
+                    <li class="nav-item"><a href="/analytics" class="nav-link"> Back</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section style="margin-top: 60px;">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="curve_line" class="chart"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="card">
+                        <div class="card-header text-center">Edit Chart</div>
+                        <div class="card-body">
+                            <form class="form" role="form" autocomplete="off">
+                                <div class="form-group row">
+                                    <label class="col-lg-3 col-form-label form-control-label">Chart name</label>
+                                    <div class="col-lg-9">
+                                        <input class="form-control" type="text" value="Chart">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="graphs">Select chart:</label>
+                                    <select class="form-control" id="graphs">
+                                        <script type="text/javascript">
+                                            getChartTypes("graphs");
+                                        </script>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="buildings">Select chart:</label>
+                                    <select class="form-control" id="buildings">
+                                        <script type="text/javascript">
+                                            getBuildings("buildings");
+                                        </script>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script type="text/javascript" src="{{url_for('static',filename='js/lineChart.js')}}"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['line'] });
+        google.charts.setOnLoadCallback(drawLine);
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+
+
+</html> 

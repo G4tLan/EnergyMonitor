@@ -4,7 +4,7 @@ function drawLine() {
 
 
     var resData = $.ajax({
-        url: "//localhost:5000/fetch",
+        url: "fetch",
         dataType: "json",
         async: false
     }).responseText;
@@ -25,9 +25,7 @@ function drawLine() {
     chart: {
         title: 'Box Office Earnings in First Two Weeks of Opening',
         subtitle: 'in millions of dollars (USD)'
-    },
-    width: 900,
-    height: 500
+    }
     };
 
     var line = new google.charts.Line(document.getElementById('curve_line'));
@@ -35,3 +33,6 @@ function drawLine() {
     line.draw(data, google.charts.Line.convertOptions(options));
 }
 
+$(window).resize(function () {
+    drawLine();
+});

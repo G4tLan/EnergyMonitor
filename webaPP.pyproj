@@ -21,7 +21,13 @@
   <ItemGroup>
     <Compile Include="data\dataModel.py" />
     <Compile Include="data\DBmanager.py" />
+    <Compile Include="data\WidgetsModel.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="main.py" />
+    <Compile Include="routes\adminRoutes.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="routes\dbRoutes.py">
       <SubType>Code</SubType>
     </Compile>
@@ -30,14 +36,17 @@
     <Compile Include="routes\visualRoutes.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="requirements.txt" />
     <Content Include="static\js\lineChart.js" />
     <Content Include="static\js\mapChart.js" />
     <Content Include="static\js\pieChart.js" />
     <Content Include="static\js\tree_map.js" />
     <Content Include="static\style.css" />
+    <Content Include="templates\login.html" />
+    <Content Include="templates\homepage.html" />
     <Content Include="templates\js\jquery-3.3.1.min.js" />
-    <Content Include="templates\main.html" />
+    <Content Include="templates\dashboard.html" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

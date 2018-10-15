@@ -4,9 +4,12 @@ import dateutil
 import pandas as pd
 import json
 import os
+import hashlib
+from passlib.hash import sha256_crypt
 from mongoengine.queryset.visitor import Q
 from mongoengine.queryset import QuerySet
 from data.dataModel import *
+from data.WidgetsModel import *
 from bson.son import SON
 
 
@@ -124,3 +127,46 @@ class MongoDBmanager:
                     res.append(data)
 
         return res
+    #To implement
+    def fetchBuildings(self):
+        db = mongoengine.connection.get_db('core')
+        res = []
+        for c in db.list_collection_names():
+            if not (c == 'Widgets' or c == 'Users'):
+                res.append(c)
+ 
+        return res
+
+    def fetchUserWidgets(emailAddress: str):
+        #return all user widgets
+        pass
+
+    def createWidget(emailAddress: str, widget: Widget):
+        #Queries database then appends widget
+        pass
+
+    def updateWidget(emailAddress: str, id: int, obj = {'typeOfGraph':None, 'url':None, 'priority':3, 'buildingName': None, 'dataLogger':None, 'startSDate':None, 'endDate':None}):
+        #Query for widget
+        #update attibutes
+        pass
+
+    def deleteWidget(emailAddress: str, id: int):
+        #query then delete
+        pass
+    def verifyUser(username: str, password:str):
+        #Query DB and check user existence
+        passwordHash = sha256_crypt.encrypt(password)
+        pass
+
+    def createNewPassword(emailAddress: str):
+        #generate a random string and send to user
+        #update password hash in DB
+        pass
+
+    def changePassword(username: str, oldPassword:str, newPassWord: str):
+        #verify user first
+        #set new password
+        pass
+
+    def checkUser():
+        pass

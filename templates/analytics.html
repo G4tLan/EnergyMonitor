@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en-US">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='name' content='Gift'>
+    <meta charset="utf-8">
+    <title> {{obj.title}} </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='style.css')}}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+
+        <div class="container">
+            <div class="navbar-header">
+                <a href="/home" class="navbar-brand">ENEDash</a>
+            </div>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navBarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navBarMenu">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a href="#dashboard" class="nav-link"> Create a widget</a></li>
+                    <li class="nav-item"><a href="/logout" class="nav-link"> Logout</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid" style="margin-top: 60px;">
+        <div class="row justify-content-center align-items-center">
+            {%for i in range(0,8)%}
+            <div class="col-md-3 col-sm-4 ">
+                <!--Print widgets here-->
+                <div class="card  text-center" style="max-width: 250px;margin-top: 10px;">
+                    <!--Header-->
+                    <div class="card-header"><h4>Building Name</h4><h5>Data Logger</h5></div>
+                    <!-- Image -->
+                    <img class="card-img-top" src="https://cms.qz.com/wp-content/uploads/2018/04/pie-chart_colorcorrected.jpeg?quality=75&strip=all&w=1100&h=619" alt="PhotoPie" style="width:100%">
+
+                    <!--Body-->
+                    <div class="card-body">
+                        <p class="card-text">The time pie of the building</p>
+                        <hr class="my-3">
+                        <a href="/widget" class="btn btn-primary">Open</a>
+                        <a href="#" class="btn btn-primary">Delete</a>
+                    </div>
+                </div>
+            </div>
+            {%endfor%}
+
+
+            
+        </div>
+    </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
+</body>
+
+
+</html> 
