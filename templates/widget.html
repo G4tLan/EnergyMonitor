@@ -28,7 +28,6 @@
             </button>
             <div class="collapse navbar-collapse" id="navBarMenu">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a href="#dashboard" class="nav-link"> Update Widget</a></li>
                     <li class="nav-item"><a href="/analytics" class="nav-link"> Back</a></li>
                 </ul>
             </div>
@@ -49,7 +48,7 @@
                     <div class="card">
                         <div class="card-header text-center">Edit Chart</div>
                         <div class="card-body">
-                            <form class="form" role="form" autocomplete="off">
+                            <form class="form" role="form" autocomplete="off" id="params">
                                 <div class="form-group row">
                                     <label class="col-lg-3 col-form-label form-control-label">Chart name</label>
                                     <div class="col-lg-9">
@@ -60,18 +59,26 @@
                                     <label for="graphs">Select chart:</label>
                                     <select class="form-control" id="graphs">
                                         <script type="text/javascript">
-                                            getChartTypes("graphs");
+                                            $(document).ready(function () {
+                                                getChartTypes("graphs");
+                                            })
                                         </script>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="buildings">Select chart:</label>
+                                    <label for="buildings">Select Building:</label>
                                     <select class="form-control" id="buildings">
                                         <script type="text/javascript">
-                                            getBuildings("buildings");
+                                            $(document).ready(function () {
+                                                getBuildings("buildings");
+                                                var opt = $('#buildings option:selected').val()
+                                                drawLine(opt)
+                                            })
                                         </script>
                                     </select>
                                 </div>
+                                <hr class="my-3" />
+                                <a href="#" class="btn btn-primary">Save</a>
                             </form>
                         </div>
                     </div>
@@ -82,11 +89,19 @@
     <script type="text/javascript" src="{{url_for('static',filename='js/lineChart.js')}}"></script>
     <script>
         google.charts.load('current', { 'packages': ['line'] });
-        google.charts.setOnLoadCallback(drawLine);
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
+    <script>
+        $('#graphs').click(function () {
+            graphType = this.value
+        });
+        $('#buildings').click(function () {
+            drawLine(this.value)
+        });
+        
+    </script>
 </body>
 
 

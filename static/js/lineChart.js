@@ -7,7 +7,7 @@ function drawLine(building) {
         dataType: "json",
         async: false
     }).responseText;
-   
+
     var data = new google.visualization.DataTable();
     data.addColumn('date', 'Time (hours)');
     data.addColumn('number', 'kVArh');
