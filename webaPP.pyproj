@@ -38,6 +38,27 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include=".gitignore" />
+    <Content Include="database\mongoDB\collection-0--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\collection-2--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\collection-4--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\diagnostic.data\metrics.2018-09-29T09-51-15Z-00000" />
+    <Content Include="database\mongoDB\diagnostic.data\metrics.interim" />
+    <Content Include="database\mongoDB\index-1--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\index-3--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\index-5--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\index-6--8875158090903759509.wt" />
+    <Content Include="database\mongoDB\journal\WiredTigerLog.0000000001" />
+    <Content Include="database\mongoDB\journal\WiredTigerPreplog.0000000001" />
+    <Content Include="database\mongoDB\journal\WiredTigerPreplog.0000000002" />
+    <Content Include="database\mongoDB\mongod.lock" />
+    <Content Include="database\mongoDB\sizeStorer.wt" />
+    <Content Include="database\mongoDB\storage.bson" />
+    <Content Include="database\mongoDB\WiredTiger" />
+    <Content Include="database\mongoDB\WiredTiger.lock" />
+    <Content Include="database\mongoDB\WiredTiger.turtle" />
+    <Content Include="database\mongoDB\WiredTiger.wt" />
+    <Content Include="database\mongoDB\WiredTigerLAS.wt" />
+    <Content Include="database\mongoDB\_mdb_catalog.wt" />
     <Content Include="requirements.txt" />
     <Content Include="static\js\lineChart.js" />
     <Content Include="static\js\mapChart.js" />
@@ -56,6 +77,10 @@
     <Content Include="templates\widget.html" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="database\" />
+    <Folder Include="database\mongoDB\" />
+    <Folder Include="database\mongoDB\diagnostic.data\" />
+    <Folder Include="database\mongoDB\journal\" />
     <Folder Include="data\" />
     <Folder Include="routes" />
     <Folder Include="static" />
