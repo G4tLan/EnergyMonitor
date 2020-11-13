@@ -71,7 +71,7 @@ Send2Trash==1.5.0
 setuptools==40.0.0
 simplegeneric==0.8.1
 six==1.11.0
-tensorflow==0.12.0
+tensorflow==2.3.1
 terminado==0.8.1
 testpath==0.3.1
 tornado==5.1
